@@ -4,6 +4,9 @@ Al hacer click en "calcular", mostrar en un elemento pre-existente el mayor sala
 Punto bonus: si hay inputs vacíos, ignorarlos en el cálculo (no contarlos como 0). */
 
 const $datosSalarios = document.querySelector("#datosSalarios");
+const $contenedorCantidadTrabajadores = document.querySelector(
+    "#contenedorCantidadTrabajadores"
+);
 const $cantidadTrabajadores = document.querySelector("#cantidadTrabajadores");
 const $camposParaIntegrantesTrabajadores = document.querySelector(
     "#camposParaIntegrantesTrabajadores"
@@ -13,9 +16,10 @@ const $botonEnviar = document.querySelector("#botonEnviar");
 const $botonReiniciar = document.querySelector("#botonReiniciar");
 
 $botonAceptar.onclick = function () {
-    if (Number($cantidadTrabajadores.value) <= 0) return;
+    if (Number($cantidadTrabajadores.value) <= 0) return false;
 
     crearInputParaTrabajadores(devolverCantidadTrabajadores());
+    ocultarElemento($contenedorCantidadTrabajadores);
     ocultarElemento($botonAceptar);
     mostrarElemento($botonEnviar);
     mostrarElemento($botonReiniciar);
@@ -27,6 +31,8 @@ $botonEnviar.onclick = function () {
     const arraySalarios = crearArraySalarios(
         $camposParaIntegrantesTrabajadores.childNodes
     );
+    if (arraySalarios.length === 0) return false;
+
     mostrarDatosSalarios(
         calcularSalarioMinimo(arraySalarios),
         calcularSalarioMaximo(arraySalarios),
@@ -41,6 +47,7 @@ $botonReiniciar.onclick = function () {
     reiniciarValores();
     ocultarElemento($botonEnviar);
     ocultarElemento($botonReiniciar);
+    mostrarElemento($contenedorCantidadTrabajadores);
     mostrarElemento($botonAceptar);
 
     return false;
@@ -131,6 +138,7 @@ function calcularSalarioPromedioMensual(array) {
 }
 
 function reiniciarValores() {
+    $datosSalarios.textContent = "";
     $cantidadTrabajadores.value = "";
     $camposParaIntegrantesTrabajadores.innerHTML = "";
 }
