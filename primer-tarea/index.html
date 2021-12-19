@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
+    <head>
+        <!-- Favicon de argentinaprograma.com -->
+        <link rel="icon" href="https://argentinaprograma.com/favicon.ico" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./estilos.css" />
+    </head>
+    <body>
+        <form>
+            <legend>
+                Por favor, ingrese el numero de integrantes en su familia
+            </legend>
+            <br />
+            <strong id="strongMenorEdad"></strong>
+            <strong id="strongMayorEdad"></strong>
+            <strong id="strongPromedioEdades"></strong>
+            <br />
+            <br>
 
-    <script src="./primer-tarea.js"></script>
-</body>
+            <label for="integrantesFamilia">Integrantes de la familia</label>
+            <br />
+            <input type="number" id="integrantesFamilia" />
+            <br />
+            <br />
+            <br />
+
+            <div id="camposPorIntegranteFamiliar" class="hidden"></div>
+
+            <button id="botonAceptar">Aceptar</button>
+            <button id="botonEnviar" class="hidden">Enviar</button>
+            <button id="botonReiniciar" class="hidden">Reiniciar</button>
+        </form>
+
+        <script src="./primer-tarea.js"></script>
+    </body>
 </html>
