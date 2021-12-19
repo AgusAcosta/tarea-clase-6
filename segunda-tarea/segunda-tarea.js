@@ -31,7 +31,11 @@ $botonEnviar.onclick = function () {
     const arraySalarios = crearArraySalarios(
         $camposParaIntegrantesTrabajadores.childNodes
     );
-    if (arraySalarios.length === 0) return false;
+
+    if (arraySalarios.length === 0) {
+        $datosSalarios.textContent = "";
+        return false;
+    }
 
     mostrarDatosSalarios(
         calcularSalarioMinimo(arraySalarios),
