@@ -3,129 +3,152 @@ Crear tantos inputs+labels como gente haya para completar la edad de cada integr
 Al hacer click en "calcular", mostrar en un elemento pre-existente la mayor edad, la menor edad y el promedio del grupo familiar.
 Punto bonus: Crear un botón para "empezar de nuevo" que empiece el proceso nuevamente, borrando los inputs ya creados (investigar cómo en MDN). */
 
-const $integrantesFamilia = document.querySelector("#integrantesFamilia")
-const $camposPorIntegranteFamiliar = document.querySelector("#camposPorIntegranteFamiliar")
-const $botonAceptar = document.querySelector("#botonAceptar")
-const $botonReiniciar = document.querySelector("#botonReiniciar")
-const $botonEnviar = document.querySelector("#botonEnviar")
-const $strongMenorEdad = document.querySelector("#strongMenorEdad")
-const $strongMayorEdad = document.querySelector("#strongMayorEdad")
-const $strongPromedioEdades = document.querySelector("#strongPromedioEdades")
+const $contenedorIntegrantesFamilia = document.querySelector(
+    "#contenedorIntegrantesFamilia"
+);
+const $integrantesFamilia = document.querySelector("#integrantesFamilia");
+const $camposPorIntegranteFamiliar = document.querySelector(
+    "#camposPorIntegranteFamiliar"
+);
+const $botonAceptar = document.querySelector("#botonAceptar");
+const $botonReiniciar = document.querySelector("#botonReiniciar");
+const $botonEnviar = document.querySelector("#botonEnviar");
+const $strongEdadMenor = document.querySelector("#strongEdadMenor");
+const $strongEdadMayor = document.querySelector("#strongEdadMayor");
+const $strongEdadPromedio = document.querySelector("#strongEdadPromedio");
 
-$botonAceptar.onclick = function() {
-    if (Number($integrantesFamilia.value) <= 0) return
+$botonAceptar.onclick = function () {
+    if (Number($integrantesFamilia.value) <= 0) return;
 
-    const numeroIntegrantes = obtenerNumeroIntegrantes()
-    crearInputsParaIntegrantes(numeroIntegrantes)
-    mostrarElemento($camposPorIntegranteFamiliar)
-    esconderElemento($botonAceptar)
-    mostrarElemento($botonEnviar)
-    mostrarElemento($botonReiniciar)
-
-    return false;
-}
-
-$botonReiniciar.onclick = function() {
-    resetearTexto($strongMenorEdad)
-    resetearTexto($strongMayorEdad)
-    resetearTexto($strongPromedioEdades)
-    eliminarInputsParaIntegrantes()
-    esconderElemento($botonEnviar)
-    esconderElemento($botonReiniciar)
-    mostrarElemento($botonAceptar)
+    const numeroIntegrantes = obtenerNumeroIntegrantes();
+    crearInputsParaIntegrantes(numeroIntegrantes);
+    mostrarElemento($camposPorIntegranteFamiliar);
+    esconderElemento($contenedorIntegrantesFamilia);
+    esconderElemento($botonAceptar);
+    mostrarElemento($botonEnviar);
+    mostrarElemento($botonReiniciar);
 
     return false;
-}
+};
 
-$botonEnviar.onclick = function() {
-    mostrarMenorEdad(calcularMenorEdad())
-    mostrarMayorEdad(calcularMayorEdad())
-    mostrarPromedioEdades(calcularPromedioEdades())
+$botonReiniciar.onclick = function () {
+    resetearTexto($strongMenorEdad);
+    resetearTexto($strongMayorEdad);
+    resetearTexto($strongPromedioEdades);
+    eliminarInputsParaIntegrantes();
+    esconderElemento($botonEnviar);
+    esconderElemento($botonReiniciar);
+    mostrarElemento($contenedorIntegrantesFamilia);
+    mostrarElemento($botonAceptar);
 
-    return false
-}
+    return false;
+};
+
+$botonEnviar.onclick = function () {
+    mostrarEdadMenor(calcularEdadMenor());
+    mostrarEdadMayor(calcularEdadMayor());
+    mostrarEdadPromedio(calcularEdadPromedio());
+
+    return false;
+};
 
 function obtenerNumeroIntegrantes() {
-    return Number($integrantesFamilia.value)
+    return Number($integrantesFamilia.value);
 }
 
 function crearInputsParaIntegrantes(numeroIntegrantes) {
     for (let i = 1; i <= numeroIntegrantes; i++) {
-        $camposPorIntegranteFamiliar.innerHTML += 
-        `<label for="edadIntegrante${i}Familia">Edad integrante:</label>
+        $camposPorIntegranteFamiliar.innerHTML += `<label for="edadIntegrante${i}Familia">Edad integrante:</label>
          <br>
          <input type="number" id="edadIntegrante1Familia">
          <br>
-         <br>`
+         <br>`;
     }
 }
 
 function mostrarElemento($elemento) {
-    $elemento.className = ""
+    $elemento.className = "";
 }
 
 function esconderElemento($elemento) {
-    $elemento.className = "hidden"
+    $elemento.className = "hidden";
 }
 
 function resetearTexto($elemento) {
-    $elemento.textContent = ""
+    $elemento.textContent = "";
 }
 
 function eliminarInputsParaIntegrantes() {
-    $camposPorIntegranteFamiliar.innerHTML = ""
+    $camposPorIntegranteFamiliar.innerHTML = "";
 }
 
-function calcularMenorEdad() {
-    let menorEdad = 0
+function calcularEdadMenor() {
+    let edadMenor = 0;
 
     for (const childNode of $camposPorIntegranteFamiliar.childNodes) {
         if (childNode.localName === "input" && Number(childNode.value) > 0) {
-            if (menorEdad > Number(childNode.value)) {
-                menorEdad = Number(childNode.value)
+            if (edadMenor > Number(childNode.value)) {
+                edadMenor = Number(childNode.value);
+            } else if (edadMenor === 0) {
+                edadMenor = Number(childNode.value);
             }
         }
     }
 
-    return menorEdad
+    return edadMenor;
 }
 
-function calcularMayorEdad() {
-    let mayorEdad = 0
+function calcularEdadMayor() {
+    let edadMayor = 0;
 
     for (const childNode of $camposPorIntegranteFamiliar.childNodes) {
         if (childNode.localName === "input" && Number(childNode.value) > 0) {
-            if (mayorEdad < Number(childNode.value)) {
-                mayorEdad = Number(childNode.value)
+            if (edadMayor < Number(childNode.value)) {
+                edadMayor = Number(childNode.value);
             }
         }
     }
 
-    return mayorEdad
+    return edadMayor;
 }
 
-function calcularPromedioEdades() {
-    let promedioEdades = 0
-    let cantidadIntegrantes = 0
+function calcularEdadPromedio() {
+    let edadPromedio = 0;
+    let cantidadIntegrantes = 0;
 
     for (const childNode of $camposPorIntegranteFamiliar.childNodes) {
         if (childNode.localName === "input" && Number(childNode.value) > 0) {
-            promedioEdades += Number(childNode.value)
-            cantidadIntegrantes++
+            edadPromedio += Number(childNode.value);
+            cantidadIntegrantes++;
         }
     }
 
-    return promedioEdades / cantidadIntegrantes
+    return edadPromedio / cantidadIntegrantes;
 }
 
-function mostrarMenorEdad(menorEdad) {
-    $strongMenorEdad.textContent = `La menor edad es: ${menorEdad}.`
+function mostrarEdadMenor(edadMenor) {
+    if (!edadMenor) {
+        $strongEdadMenor.textContent = "";
+        return
+    }
+
+    $strongEdadMenor.textContent = `La edad menor es: ${edadMenor}.`;
 }
-    
-function mostrarMayorEdad(mayorEdad) {
-    $strongMayorEdad.textContent = `La mayor edad es: ${mayorEdad}.`
+
+function mostrarEdadMayor(edadMayor) {
+    if (!edadMayor) {
+        $strongEdadMayor.textContent = "";
+        return
+    }
+
+    $strongEdadMayor.textContent = `La edad mayor es: ${edadMayor}.`;
 }
-    
-function mostrarPromedioEdades(promedioEdades) {
-    $strongPromedioEdades.textContent = `El promedio de edades es: ${promedioEdades}.`
+
+function mostrarEdadPromedio(edadPromedio) {
+    if (!edadPromedio) {
+        $strongEdadPromedio.textContent = "";
+        return
+    }
+
+    $strongEdadPromedio.textContent = `El edad promedio es: ${edadPromedio}.`;
 }
